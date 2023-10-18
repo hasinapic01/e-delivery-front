@@ -1,18 +1,16 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { styled } from '@mui/system';
+import authAPI from './authAPI';
 
 const PurpleTextField = styled(TextField)`
   & .MuiOutlinedInput-root {
@@ -30,58 +28,56 @@ const PurpleTextField = styled(TextField)`
     color: purple;
   }
 `;
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function Login() {
-  const handleSubmit = (event) => {
+  const [credentials, setCredentials] = useState({
+    identifier: "",
+    password:""
+  })
+
+  const handleChange = ({currentTarget}) => {
+    console.log(currentTarget)
+    const {value, name}= currentTarget
+    setCredentials({
+      ...credentials,
+      [name]: value
+    })
+  }
+  
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    try{
+      await authAPI.authenticate(credentials)
+    }catch(error){
+      console.log(error)
+    }
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
+        <Box sx={{ marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar src="/public/logo.jpg" alt="Avatar" sx={{ width: '200px', height: '200px' }} />
+            alignItems: 'center', }} >
+          <Avatar src="/logo.jpg" alt="Avatar" sx={{ width: '200px', height: '200px' }} />
           <Typography>Log into your account</Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <PurpleTextField
               margin="normal"
               required
               fullWidth
-              id="email"
+              id="identifier"
+              type="text"
               label="Email Address"
-              name="email"
+              name="identifier"
               autoComplete="email"
               autoFocus
               InputProps={{ sx: { borderColor: 'purple' } }}
+              onChange={handleChange}
             />
             <PurpleTextField
               margin="normal"
@@ -92,6 +88,7 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleChange}
             />
             <Grid container justifyContent="flex-end">
               <Grid item>
@@ -104,13 +101,13 @@ export default function Login() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, bgcolor: 'purple' }}
+              color="secondary"
             >
               Log In
             </Button>
           </Box>
         </Box>
-        <Typography align="center">Don't have an account? <Link href="#" variant="body2" sx={{ color: 'purple' }}>Sign Up</Link></Typography>
+        <Typography align="center">Don't have an account? <Link href="#" variant="body2" sx={{ color: 'purple' }} >Sign Up</Link></Typography>
       </Container>
     </ThemeProvider>
   );
