@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Delete from '@mui/icons-material/Delete';
 import { IconButton } from '@mui/material';
 
-export default function BasicPopover() {
+export default function BasicPopover({onClick,button_key}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -21,8 +21,7 @@ export default function BasicPopover() {
 
   return (
     <div>
-      <Button aria-describedby={id} variant="contained" onClick={handleClick}>
-        Open Popover
+      <Button  style={{width:"25px"}} aria-describedby={id} variant="contained" onClick={handleClick}>
       </Button>
       <Popover
         id={id}
@@ -30,13 +29,16 @@ export default function BasicPopover() {
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: 'top',
+          horizontal: 'right',
         }}
       >
-         <IconButton aria-label="Example">
-                <Delete/>
-            </IconButton>
+            <Button id={button_key} onClick={onClick} startIcon={<Delete fontSize='small'/>} color='error'>
+                delete
+            </Button>
+            <Button id={button_key} onClick={onClick} startIcon={<Delete fontSize='small'/>}>
+                Modify
+            </Button>
       </Popover>
     </div>
   );
