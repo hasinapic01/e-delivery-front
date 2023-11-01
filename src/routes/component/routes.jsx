@@ -17,7 +17,7 @@ export const Loader = (Component) => (props) =>
 const Status404 = Loader(lazy(() => import('src/pages/Status404')));
 
 // Auth
-const Login = Loader(lazy(() => import('src/pages/Login')));
+const Signin = Loader(lazy(() => import('src/pages/Signin')));
 
 // Dashboard
 const Dashboard = Loader(lazy(() => import('src/pages/Dashboard')));
@@ -32,13 +32,13 @@ const routes = [
     children: [
       {
         path: '',
-        element: <Navigate to="/login" replace />
+        element: <Navigate to="/sign_in" replace />
       },
       {
-        path: 'login',
+        path: 'Sign_in',
         element: (
           <AuthLayout>
-            <Login />
+            <Signin />
           </AuthLayout>
         )
       },

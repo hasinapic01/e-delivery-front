@@ -1,0 +1,5 @@
+export const Validemail=new RegExp("^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$")
+export const Validphone=new RegExp("^[0-9]{9,9}")
+export const Validpassword=new RegExp("^(?=.*?[A-Za-z])(?=.*?[0-9].){6,}$")
+export const Validtext=new RegExp("^[a-zA-Z0-9]{4,}")
+export const Validaddress=new RegExp("^([a-zA-Z0-9]{8,})")

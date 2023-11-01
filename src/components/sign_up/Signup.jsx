@@ -305,7 +305,7 @@ const Register = async () => {
                         </Typography>
                 <Grid>
                     <Button type="submit" variant='contained' color="error" sx={{margin:1.5}} >Sign Up</Button>            
-                    <Link href="/login" variant="body2" underline='none' textAlign='center' >
+                    <Link href="/sign_in" variant="body2" underline='none' textAlign='center' >
                     Already have an account? Log in
                     </Link>
                 </Grid>
