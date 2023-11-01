@@ -16,7 +16,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from 'src/components/Items/listItems';
-
+import { Outlet } from 'react-router-dom';
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -63,7 +63,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function DashboardLayout({ children }) {
+export default function DashboardLayout() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -134,9 +134,9 @@ export default function DashboardLayout({ children }) {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              {children}
+          <Container  sx={{ mt: 4, mb: 4 }}>
+            <Grid container >
+            <Outlet/>
             </Grid>
           </Container>
         </Box>

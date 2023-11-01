@@ -2,10 +2,9 @@ import { Suspense, lazy } from 'react';
 import { Navigate, useRoutes } from 'react-router-dom';
 
 // import BaseLayout from './layouts/BaseLayout';
-import SuspenseLoader from './components/SuspenseLoader';
-import DashboardLayout from './layouts/DashboardLayout';
-import AuthLayout from './layouts/AuthLayout';
-
+import SuspenseLoader from '../../components/SuspenseLoader';
+import DashboardLayout from '../../layouts/DashboardLayout';
+import AuthLayout from '../../layouts/AuthLayout';
 // eslint-disable-next-line react/display-name
 export const Loader = (Component) => (props) =>
   (
@@ -18,10 +17,14 @@ export const Loader = (Component) => (props) =>
 const Status404 = Loader(lazy(() => import('src/pages/Status404')));
 
 // Auth
-const Login = Loader(lazy(() => import('src/pages/Login')));
+const Signin = Loader(lazy(() => import('src/pages/Signin')));
 
 // Dashboard
 const Dashboard = Loader(lazy(() => import('src/pages/Dashboard')));
+
+const Orders = Loader(lazy(() => import('src/pages/Orders')));
+
+const Signup=Loader(lazy(()=> import('src/pages/sign_up')))
 
 const routes = [
   {
@@ -29,13 +32,21 @@ const routes = [
     children: [
       {
         path: '',
-        element: <Navigate to="/login" replace />
+        element: <Navigate to="/sign_in" replace />
       },
       {
-        path: 'login',
+        path: 'Sign_in',
         element: (
           <AuthLayout>
-            <Login />
+            <Signin />
+          </AuthLayout>
+        )
+      },
+      {
+        path: 'Signup',
+        element: (
+          <AuthLayout>
+            <Signup />
           </AuthLayout>
         )
       },
@@ -50,7 +61,11 @@ const routes = [
       {
         path: '',
         element: <Dashboard />
-      }
+      },
+      {
+        path: 'orders',
+        element: <Orders/>
+      }      
     ]
   },
   {
